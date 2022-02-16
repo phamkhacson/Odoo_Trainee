@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--filter without author-->
+        <record id="library_book_view_search" model="ir.ui.view">
+            <field name="name">library.book.search</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="author_ids"/>
+                    <filter string="No Authors"
+                            name="without_author"
+                            domain="[('author_ids','=',False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <!--   activity view -->
+        <record id="view_library_book_activity" model="ir.ui.view">
+            <field name="name">view.library.book.activity</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <activity string="Tasks">
+                    <templates>
+                        <div t-name="activity-box">
+                            <div>
+                                <field name="name" display="full"/>
+                                <field name="state"
+                                       muted="1" display="full"/>
+                            </div>
+                        </div>
+                    </templates>
+                </activity>
+            </field>
+        </record>
+
+                <!--        view map ____ enterprise edition-->
+        <!--        <record id="view_library_book_map" model="ir.ui.view">-->
+        <!--            <field name="name">view.library.book.map</field>-->
+        <!--            <field name="model">library.book</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <map res_partner="partner_id">-->
+        <!--                    <marker-popup>-->
+        <!--                        <field name="name" string="Title "/>-->
+        <!--                        <field name="author_ids" string="Authors"/>-->
+        <!--                    </marker-popup>-->
+        <!--                </map>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--gantt view ____ enterprise edition-->
+        <record id="view_library_book_gantt" model="ir.ui.view">
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <gantt date_start="date_release" date_stop="date_return"
+                       string="Tasks" default_group_by="state">
+                    <field name="name"/>
+                    <field name="state"/>
+                </gantt>
+            </field>
+        </record>
+
+        <!--        view dashboard ____ enterprise edition-->
+        <!--        <record id="view_library_book_dashboard" model="ir.ui.view">-->
+        <!--            <field name="name">view.library.book.dashboard</field>-->
+        <!--            <field name="model">library.book</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <dashboard>-->
+        <!--                    <view ref="my_library.view_library_book_graph"-->
+        <!--                          type="graph"/>-->
+        <!--                    <view ref="my_library.view_library_book_pivot"-->
+        <!--                          type="pivot"/>-->
+        <!--                </dashboard>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        view cohort ____ enterprise edition-->
+        <!--        <record id="view_library_book_cohort" model="ir.ui.view">-->
+        <!--            <field name="model">library.book</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <cohort date_start="date_release"-->
+        <!--                        date_stop="date_return"-->
+        <!--                        interval="month"-->
+        <!--                        string="Task Cohort"/>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        pivot view-->
+        <record id="view_library_book_pivot" model="ir.ui.view">
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <pivot>
+                    <field name="name" type="row"/>
+                    <field name="pages" type="col"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!--        graph view-->
+        <record id="view_library_book_graph" model="ir.ui.view">
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <graph type="bar">
+                    <field name="name" type="col"/>
+                    <field name="pages" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <!--            calendar view-->
+        <record id="view_library_book_calendar" model="ir.ui.view">
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <calendar date_start="date_release" date_stop="date_return">
+                    <field name="name"/>
+                    <field name="author_ids"/>
+                    <field name="state"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!--        kanban view-->
+        <record id="library_book_kanban_view" model="ir.ui.view">
+            <field name="name">library.book.kanban.view</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="id"/>
+                    <field name="cover"/>
+                    <field name="name"/>
+                    <field name="author_ids"/>
+                    <field name="category_id"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_record_has_image_fill">
+                                <t t-if="!record.cover.raw_value">
+                                    <img class="o_kanban_image" alt="Avatar"
+                                         t-att-src='_s + "/base/static/img/avatar_grey.png"'/>
+                                </t>
+                                <t t-else="">
+                                    <div class="o_kanban_image_fill_left d-none d-md-block"
+                                         t-attf-style="background-image:url('#{kanban_image('library.book', 'cover', record.id.raw_value)}')"/>
+                                </t>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title oe_partner_heading">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section"/>
+                                    <ui>
+                                        <li>Authors:
+                                            <field name="author_ids"/>
+                                        </li>
+                                        <li>Category:
+                                            <field name="category_id"/>
+                                        </li>
+                                        <li>State:
+                                            <field name="state"/>
+                                        </li>
+                                    </ui>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!--library tree view-->
+        <record id="library_book_view_tree" model="ir.ui.view">
+            <field name="name">library.book.list</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="date_release"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        library form view-->
+        <record id="library_book_view_form" model="ir.ui.view">
+            <field name="name">library.book.form</field>
+            <field name="model">library.book</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="report_missing_book"
+                                string="Report Missing Book"
+                                type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="author_ids" widget="many2many_tags"/>
+                                <field name="manager_remarks"/>
+                                <field name="state" widget="statusbar"/>
+                                <field name="pages"/>
+                                <field name="notes"/>
+                                <field name="category_id"/>
+                                <field name="publisher_id"/>
+                                <field name="old_edition"/>
+                                <field name="publisher_city"/>
+                                <field name="ref_doc_id"/>
+                            </group>
+                            <group>
+                                <field name="short_name"/>
+                                <field name="date_release"/>
+                                <button name="change_release_date" string="Update Date"
+                                        type="object"/>
+                                <field name="date_updated"/>
+                                <field name="date_return"/>
+                                <field name="age_days"/>
+                                <field name="cover" widget="image" class="oe_avatar"/>
+                                <field name="reader_rating"/>
+                                <field name="retail_price"/>
+                                <field name="currency_id"/>
+                                <field name="cost_price"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                            <field name="is_public"/>
+                            <field name="private_notes"/>
+                            <field name="report_missing"/>
+                            <button name="log_all_library_members" string="Log Members" type="object"/>
+                            <button name="average_book_occupation" string="Log Average Occ." type="object"/>
+                        </group>
+                        <group>
+                            <button name="make_unavailable" string="Make Unavailable"
+                                    type="object"/>
+                            <button name="make_available" string="Make Available"
+                                    type="object"/>
+                            <button name="make_borrowed" string="Make Borrowed"
+                                    type="object"/>
+                            <button name="make_lost" string="Make Lost"
+                                    type="object"/>
+                        </group>
+                        <group>
+                            <button name="book_rent"
+                                    string="Rent this book"
+                                    type="object" class="btn-primary"
+                                    groups="my_library.group_self_borrow"/>
+                            <button
+                                    name="return_all_books"
+                                    string="Return all book"
+                                    type="object" class="btn-primary"
+                                    groups="my_library.group_self_borrow"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        library action-->
+        <record id='library_book_action' model='ir.actions.act_window'>
+            <field name="name">Library Books</field>
+            <field name="res_model">library.book</field>
+            <field name="view_mode">kanban,tree,form,calendar,graph,pivot,gantt,activity</field>
+        </record>
+
+
+        <!--        menu-->
+        <menuitem
+                name="My Library"
+                id="library_base_menu"/>
+        <menuitem name="Books" id="library_book_menu"
+                  parent="library_base_menu"
+                  action="library_book_action"/>
+    </data>
+</odoo>

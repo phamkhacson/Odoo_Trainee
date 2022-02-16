@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="library_book_rent_tree" model="ir.ui.view">
+            <field name="name">library.book.rent.tree</field>
+            <field name="model">library.book.rent</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="book_id"/>
+                    <field name="borrower_id"/>
+                    <field name="state"/>
+                    <field name="rent_date"/>
+                    <field name="return_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="library_book_rent_form" model="ir.ui.view">
+            <field name="name">library.book.rent.form</field>
+            <field name="model">library.book.rent</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="book_id"/>
+                            <field name="borrower_id"/>
+                            <field name="state"/>
+                            <field name="rent_date"/>
+                            <field name="return_date"/>
+                        </group>
+                        <group>
+                            <button name="book_lost"
+                                    string="Lost the Book"
+                                    states="ongoing"
+                                    type="object"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="book_rent_action" model="ir.actions.act_window">
+            <field name="name">Library Book Rent</field>
+            <field name="res_model">library.book.rent</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Book Rent"
+                  id="library_book_rent_menu"
+                  parent="library_base_menu"
+                  action="book_rent_action"/>
+
+    </data>
+</odoo>

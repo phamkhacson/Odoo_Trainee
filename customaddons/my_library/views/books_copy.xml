@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id='book_copy_action' model='ir.actions.act_window'>
+            <field name="name">Books Copy</field>
+            <field name="res_model">library.book.copy</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        menu-->
+<!--        <menuitem name="Books Copy" id="book_copy_menu"-->
+<!--                  parent="library_base_menu"-->
+<!--                  action="book_copy_action"/>-->
+    </data>
+</odoo>

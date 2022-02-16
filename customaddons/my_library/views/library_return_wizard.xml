@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id='library_return_wizard_form' model='ir.ui.view'>
+            <field name='name'>library return wizard form view</field>
+            <field name='model'>library.return.wizard</field>
+            <field name='arch' type='xml'>
+                <form string="Return books">
+                    <sheet>
+                        <group>
+                            <field name='borrower_id'/>
+                        </group>
+                        <group>
+                            <field name='book_ids'/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string='Return' type='object' name='books_returns'
+                                class='btn-primary'/>
+                        <button string='Cancel' class='btn-default' special='cancel'/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_wizard_return_books"
+                    name="Give on Return"
+                    res_model="library.return.wizard"
+                    view_mode="form" target="new"/>
+
+        <menuitem id="menu_wizard_return_books"
+                  parent="library_base_menu"
+                  action="action_wizard_return_books"
+                  sequence="20"/>
+    </data>
+</odoo>
