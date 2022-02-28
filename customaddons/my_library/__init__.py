@@ -1,4 +1,4 @@
-from . import models, wizard, views, controllers, data, security
+from . import models, wizard, views, controllers, data
 
 from odoo import api, fields, SUPERUSER_ID
 
